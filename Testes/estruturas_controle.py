@@ -14,7 +14,7 @@
 #for nome in nomes:
  #   print(nome)
 
- contador = 5
- while contador > 0:
-    print(contador)
-    contador -= 1
+# contador = 5
+# while contador > 0:
+#    print(contador)
+#    contador -= 1
