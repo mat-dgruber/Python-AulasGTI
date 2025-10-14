@@ -1,11 +1,20 @@
 from funcionarios import Funcionario
 from typing import List
+import locale
+
+# Configura a localidade para o português do Brasil para formatação de moeda.
+try:
+    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+except locale.Error:
+    # Fallback para sistemas Windows
+    locale.setlocale(locale.LC_ALL, 'Portuguese_Brazil.1252')
+
 
 def adicionar_funcionario(funcionarios: List[Funcionario], funcionario: Funcionario):
     
     if not isinstance(funcionario, Funcionario):
         raise TypeError("Apenas objetos da classe Funcionario podem ser adicionados.")
-    if not funcionario.nome or funcionario.salario < 0:
+    if not funcionario.nome or funcionario._salario < 0:
          raise ValueError("Nome inválido ou salário negativo.")
         
     
@@ -18,10 +27,12 @@ def listar_por_cargo(funcionarios: List[Funcionario], cargo: str) -> List[Funcio
 def calcular_folha_total(funcionarios: List[Funcionario]):
     folha_total= 0.0
     for funcionario in funcionarios:
-        salario_com_bonus = funcionario.salario + funcionario.calcular_bonus()
+        salario_com_bonus = funcionario._salario + funcionario.calcular_bonus()
         folha_total += salario_com_bonus
      
     return folha_total
+
+print("=== GERENCIADOR DE FUNCIONÁRIOS ===")
 
 
 #--------------------------------------------------------
@@ -54,12 +65,12 @@ if __name__ == '__main__':
     print("\n--- Listar Desenvolvedores ---")
     desenvolvedores = listar_por_cargo(funcionarios, "Desenvolvedor")
     for d in desenvolvedores:
-        print(f"- {d.nome}, Bônus: R${d.calcular_bonus():.2f}")
+        print(f"- {d.nome}, Bônus: {locale.currency(d.calcular_bonus(), symbol=True, grouping=True)}")
 
     # 4. Calcular Folha de Pagamento Total
     folha = calcular_folha_total(funcionarios)
     print(f"\n--- Folha de Pagamento Total ---")
-    print(f"Total a pagar (Salários + Bônus): R${folha:.2f}")
+    print(f"Total a pagar (Salários + Bônus): {locale.currency(folha, symbol=True, grouping=True)}")
 
     # 5. Teste de Validação (Opcional)
     print("\n--- Teste de Validação (Nome Vazio) ---")
