@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Produtos</title>
+    <style>
+        body { font-family: sans-serif; padding: 2em; }
+        h1 { color: #333; }
+        ul { list-style-type: none; padding: 0; }
+        li { background-color: #f4f4f4; margin-bottom: 5px; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Nossos Produtos</h1>
+    {% if products %}
+        <ul>
+            {% for product in products %}
+                <li>{{ product.name }} - {{ product.description }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhum produto encontrado.</p>
+    {% endif %}
+</body>
+</html>
